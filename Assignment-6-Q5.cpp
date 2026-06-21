@@ -1,0 +1,73 @@
+// Reverse
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node {
+    public:
+    int data;
+    Node* prev;
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        prev = nullptr;
+        next = nullptr;
+    }
+};
+class DoubleyLL {
+    public:
+    Node* head = nullptr;
+
+    DoubleyLL() {
+        head = nullptr;
+    }
+
+    void insertFront(int x) {
+        Node* newNode = new Node (x);
+        if (head == nullptr){
+            head = newNode;
+            return;
+        }
+        newNode->next = head;
+        head->prev = newNode;
+        head = newNode;
+    }
+
+    Node* reverseDLL(Node* head) {
+        Node* curr = head;
+        Node* temp = NULL;
+        while(curr) {
+            temp = curr->prev;
+            curr->prev = curr->next;
+            curr->next = temp;
+            curr = curr->prev;
+        }
+        if(temp) {
+            head = temp->prev;
+        }
+        return head;
+    }
+
+    void display() {
+        Node* temp = head;
+        while (temp) {
+            cout << temp->data << " ";
+            temp = temp->next;
+        }
+        cout << endl;
+    }
+};
+int main () {
+    DoubleyLL dbl;
+
+    dbl.insertFront(10);
+    dbl.insertFront(20);
+    dbl.insertFront(30);
+    dbl.insertFront(40);
+
+    dbl.head = dbl.reverseDLL(dbl.head);
+
+    dbl.display();
+    return 0;
+
+}
